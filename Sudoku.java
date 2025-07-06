@@ -39,6 +39,41 @@ public class Sudoku {
         }
     }
 
+    public void ft_userNewGrid()
+    {
+        int[][] tempgrid = new int[9][9];
+        String[] numbers = new String[9];
+        String line = "";
+        for (int i = 0; i < 9; i++)
+        {
+            line = _scanner.nextLine().trim();
+            numbers = line.split(" ");
+        }
+
+        for (int i = 0; i < tempgrid.length; i++)
+        {
+            
+            for (int x = 0; x < tempgrid.length; x++)
+            {
+                if (numbers[x].length() != 9)
+                {
+                    System.err.println("Error: Invalid grid");
+                    return ;
+                }
+                try
+                {
+                    tempgrid[i][x] = Integer.parseInt(numbers[x]);
+                }
+                catch (Exception e)
+                {
+                    System.err.println("Error: Invalid Integer input");
+                    _scanner.nextLine();
+                    return ;
+                }
+            }
+        }
+    }
+
     public void ft_parseUserInput()
     {
         String strUserInput = ft_safeTryCatchString();
@@ -75,10 +110,13 @@ public class Sudoku {
             case 7:
                 return true;
             case 8:
+                System.out.println("Enter the grid values >");
+                ft_userNewGrid();
                 return true;
         }
+        return true;
     }
-
+    
     public boolean ft_menu()
     {
         System.err.println("Escolha opcao: \r\n" + //
@@ -99,33 +137,6 @@ public class Sudoku {
             return true;
         }
         return ft_userInputMenuChoice();
-    }
-
-    public void GQ()
-    {
-        int[][] tempgrid = new int[9][9];
-        String line = "";
-        String[] numbers = new String[9];
-        System.out.println("Enter the grid values!");
-        for (int i = 0; i < 9; i++)
-        {
-            line = _scanner.nextLine().trim();
-            numbers = line.split(" ");
-        }
-
-        for (int i = 0; i < tempgrid.length; i++)
-        {
-            
-            for (int x = 0; x < tempgrid.length; x++)
-            {
-                try {
-                    tempgrid[i][x] = Integer.parseInt(numbers[i]);
-                } catch (Exception e) {
-                    
-                }
-            }
-            System.out.printf("%s", numbers[i]);
-        }
     }
 
     public void ft_printGrid()
