@@ -28,6 +28,21 @@ public class Sudoku {
             return ;
         }
     }
+
+    public void ft_menu()
+    {
+        System.err.println("Escolha opcao: \r\n" + //
+                        "1. 0 - Sair \r\n" + //
+                        "2. 1 - Aplicar permutacao de dois numeros \r\n" + //
+                        "3. 2 - Aplicar permutacao de duas linhas de uma mesma faixa horizontal \r\n" + //
+                        "4. 3 - Aplicar permutacao de duas colunas de uma mesma faixa vertical \r\n" + //
+                        "5. 4 - Aplicar permutacao de duas faixas horizontais\r\n" + //
+                        "6. 5 - Aplicar permutacao de duas faixas verticais \r\n" + //
+                        "7. 6 - Aplicar reflexao horizontal \r\n" + //
+                        "8. 7 - Aplicar reflexao vertical\r\n" + //
+                        "9. 8 - Indicar quadricula");
+    }
+    
     public static void main(String[] args)
     {
         Sudoku sudokuGame = new Sudoku();
