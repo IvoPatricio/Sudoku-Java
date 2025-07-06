@@ -54,29 +54,6 @@ public class Sudoku {
         }
     }
 
-    public void GQ()
-    {
-        _grid = new int[9][9];
-        String line = "";
-        String[] numbers = new String[9];
-        System.out.println("Enter the grid values!");
-        for (int i = 0; i < 9; i++)
-        {
-            line = _scanner.nextLine().trim();
-            numbers = line.split(" ");
-        }
-
-        for (int i = 0; i < _grid.length; i++)
-        {
-            
-            for (int x = 0; x < _grid[i].length; x++)
-            {
-                ;
-            }
-            System.out.printf("%s", numbers[i]);
-        }
-    }
-
     public boolean ft_userInputMenuChoice()
     {
         switch (_userInputMenu) 
@@ -110,14 +87,71 @@ public class Sudoku {
         return ft_userInputMenuChoice();
     }
 
+    public void GQ()
+    {
+        int[][] tempgrid = new int[9][9];
+        String line = "";
+        String[] numbers = new String[9];
+        System.out.println("Enter the grid values!");
+        for (int i = 0; i < 9; i++)
+        {
+            line = _scanner.nextLine().trim();
+            numbers = line.split(" ");
+        }
+
+        for (int i = 0; i < tempgrid.length; i++)
+        {
+            
+            for (int x = 0; x < tempgrid.length; x++)
+            {
+                try {
+                    tempgrid[i][x] = Integer.parseInt(numbers[i]);
+                } catch (Exception e) {
+                    
+                }
+            }
+            System.out.printf("%s", numbers[i]);
+        }
+    }
+
+    public void ft_printGrid()
+    {
+        System.out.println("--------------------------");
+        for (int i = 0; i < _grid.length; i++)
+        {
+            for (int x = 0; x < _grid[i].length; x++)
+            {
+                if (x % 3 == 0)
+                    System.out.print(" |");
+                System.out.printf(" %d", _grid[i][x]);
+                if (x == 8)
+                    System.out.print(" |\n");
+            }
+        }
+        System.out.println("--------------------------");
+    }
+
+    public void ft_startStandardGrid()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                _grid[i][j] = (i / 3 + 3 * (i % 3) + j) % 9 + 1;
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
         Sudoku sudokuGame = new Sudoku();
         boolean isrunning = true;
+
+        sudokuGame.ft_startStandardGrid();
+        sudokuGame.ft_printGrid();
         while (isrunning)
-        {
             isrunning = sudokuGame.ft_menu();
-        }
+
         sudokuGame._scanner.close();
     }
 }
