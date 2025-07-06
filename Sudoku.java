@@ -17,7 +17,7 @@ public class Sudoku {
         }
         catch (Exception e)
         {
-            System.out.println("Error\n");
+            System.err.println("Error: Invalid String input\n");
             _scanner.nextLine();
             return null;
         }
@@ -33,7 +33,7 @@ public class Sudoku {
         }
         catch (Exception e)
         {
-            System.out.println("Error\n");
+            System.err.println("Error: Invalid Integer input\n");
             _scanner.nextLine();
             return null;
         }
@@ -48,7 +48,8 @@ public class Sudoku {
         if (strUserInput.length() != 3 || !Character.isDigit(strUserInput.charAt(0)) ||
             strUserInput.charAt(1) != ' ' || !Character.isDigit(strUserInput.charAt(2)))
         {
-            System.out.println("Error");
+            System.err.println("Error: Input must be two numbers between 1 and 9, " + //
+                "separated by a space, example:'2 6'\n");
             return ;
         }
     }
@@ -76,7 +77,7 @@ public class Sudoku {
         }
     }
 
-    public boolean ft_userInputChoice()
+    public boolean ft_userInputMenuChoice()
     {
         switch (_userInputMenu) 
         {
@@ -102,8 +103,11 @@ public class Sudoku {
         
         _userInputMenu = ft_safeTryCatchInt();
         if (_userInputMenu == null || _userInputMenu < 0 || _userInputMenu > 8)
+        {
+            System.err.println("Error: Menu option must be between 0 and 8\n");
             return true;
-        return ft_userInputChoice();
+        }
+        return ft_userInputMenuChoice();
     }
 
     public static void main(String[] args)
