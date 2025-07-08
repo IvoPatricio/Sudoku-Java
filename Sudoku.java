@@ -38,6 +38,43 @@ public class Sudoku {
             return null;
         }
     }
+    
+    public void ft_checkGrid_Rows_Columns(int[][] tempgrid)
+    {
+        for (int x = 0; x < tempgrid.length; x++)
+        {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (int i = 0; i < tempgrid[x].length; i++)
+            {
+                map.put(tempgrid[x][i], map.getOrDefault(tempgrid[x][i], 0) + 1);
+            }
+            for (int key = 1; key <= 9; key++)
+            {
+                if (map.getOrDefault(key, 0) == 0)
+                {
+                    System.err.println("Error: Invalid Grid Rows");
+                    return ;
+                }
+            }
+        }
+
+        for (int x = 0; x < tempgrid.length; x++)
+        {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (int i = 0; i < tempgrid.length; i++)
+            {
+                map.put(tempgrid[i][x], map.getOrDefault(tempgrid[i][x], 0) + 1);
+            }
+            for (int key = 1; key <= 9; key++)
+            {
+                if (map.getOrDefault(key, 0) == 0)
+                {
+                    System.err.println("Error: Invalid Grid Columns");
+                    return ;
+                }
+            }
+        }
+    }
 
     public void ft_userNewGrid()
     {
@@ -57,7 +94,7 @@ public class Sudoku {
             {
                 if (numbers[x].length() != 9)
                 {
-                    System.err.println("Error: Invalid grid");
+                    System.err.println("Error: Invalid grid length");
                     return ;
                 }
                 try
@@ -66,12 +103,13 @@ public class Sudoku {
                 }
                 catch (Exception e)
                 {
-                    System.err.println("Error: Invalid Integer input");
+                    System.err.println("Error: Invalid Grid Integer input");
                     _scanner.nextLine();
                     return ;
                 }
             }
         }
+        ft_checkGrid_Rows_Columns(tempgrid);
     }
 
     public void ft_parseUserInput()
@@ -94,6 +132,7 @@ public class Sudoku {
         switch (_userInputMenu) 
         {
             case 0:
+                System.out.println("Programm exiting");
                 return false;
             case 1:
                 return true;
