@@ -126,7 +126,7 @@ public class Sudoku {
                 }
             }
         }
-        if (ft_checkGrid_Rows_Columns_Blocks(tempgrid))
+        if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
         {
             System.err.println("Success: Grid Valid");
             _grid = tempgrid;
@@ -135,19 +135,61 @@ public class Sudoku {
             System.err.println("Error: Grid Invalid");
     }
 
-    public void ft_parseUserInput()
+    public boolean ft_parseUserInput()
     {
         String strUserInput = ft_safeTryCatchString();
         if (strUserInput == null)
-            return ;
+            return false;
 
         if (strUserInput.length() != 3 || !Character.isDigit(strUserInput.charAt(0)) ||
             strUserInput.charAt(1) != ' ' || !Character.isDigit(strUserInput.charAt(2)))
         {
             System.err.println("Error: Input must be two numbers between 1 and 9, " + //
                 "separated by a space, example:'2 6'\n");
-            return ;
+            return false;
         }
+        _userInputSudoku[0] = Character.getNumericValue(strUserInput.charAt(0));
+        _userInputSudoku[1] = Character.getNumericValue(strUserInput.charAt(2));
+        return true;
+    }
+
+    public void ft_permuteNumbersGrid()
+    {
+        int[][] tempgrid = new int[9][9];
+        for (int i = 0; i < 9; i++)
+        {
+            System.arraycopy(_grid[i], 0, tempgrid[i], 0, 9);
+        }
+
+        for (int x = 0; x < tempgrid.length; x++)
+        {
+            for (int i = 0; i < tempgrid[x].length; i++)
+            {
+                if (tempgrid[x][i] == _userInputSudoku[0])
+                    tempgrid[x][i] = _userInputSudoku[1];
+                else if (tempgrid[x][i] == _userInputSudoku[1])
+                    tempgrid[x][i] = _userInputSudoku[0];
+            }
+        }
+        if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
+            _grid = tempgrid;
+    }
+
+    public void ft_printGrid()
+    {
+        System.out.println("--------------------------");
+        for (int i = 0; i < _grid.length; i++)
+        {
+            for (int x = 0; x < _grid[i].length; x++)
+            {
+                if (x % 3 == 0)
+                    System.out.print(" |");
+                System.out.printf(" %d", _grid[i][x]);
+                if (x == 8)
+                    System.out.print(" |\n");
+            }
+        }
+        System.out.println("--------------------------");
     }
 
     public boolean ft_userInputMenuChoice()
@@ -158,6 +200,8 @@ public class Sudoku {
                 System.out.println("Programm exiting");
                 return false;
             case 1:
+                if (ft_parseUserInput())
+                    ft_permuteNumbersGrid();
                 return true;
             case 2:
                 return true;
@@ -181,6 +225,7 @@ public class Sudoku {
     
     public boolean ft_menu()
     {
+        ft_printGrid();
         System.err.println("Escolha opcao: \r\n" + //
                         "1. 0 - Sair \r\n" + //
                         "2. 1 - Aplicar permutacao de dois numeros \r\n" + //
@@ -201,23 +246,6 @@ public class Sudoku {
         return ft_userInputMenuChoice();
     }
 
-    public void ft_printGrid()
-    {
-        System.out.println("--------------------------");
-        for (int i = 0; i < _grid.length; i++)
-        {
-            for (int x = 0; x < _grid[i].length; x++)
-            {
-                if (x % 3 == 0)
-                    System.out.print(" |");
-                System.out.printf(" %d", _grid[i][x]);
-                if (x == 8)
-                    System.out.print(" |\n");
-            }
-        }
-        System.out.println("--------------------------");
-    }
-
     public void ft_startStandardGrid()
     {
         for (int i = 0; i < 9; i++)
@@ -235,7 +263,6 @@ public class Sudoku {
         boolean isrunning = true;
 
         sudokuGame.ft_startStandardGrid();
-        sudokuGame.ft_printGrid();
         while (isrunning)
             isrunning = sudokuGame.ft_menu();
 
