@@ -153,6 +153,27 @@ public class Sudoku {
         return true;
     }
 
+    public void ft_permuteTwoColumns()
+    {
+
+    }
+
+    public void ft_permuteTwoRows()
+    {
+        
+    }
+
+    public void ft_permuteTwoColumnsOfBand()
+    {
+
+    }
+
+    public void ft_permuteTwoRowsOfBand()
+    {
+
+    }
+
+    
     public void ft_permuteNumbersGrid()
     {
         int[][] tempgrid = new int[9][9];
@@ -204,12 +225,20 @@ public class Sudoku {
                     ft_permuteNumbersGrid();
                 return true;
             case 2:
+                if (ft_parseUserInput())
+                    ft_permuteTwoRowsOfBand();
                 return true;
             case 3:
+                if (ft_parseUserInput())
+                    ft_permuteTwoColumnsOfBand();
                 return true;
             case 4:
+                if (ft_parseUserInput())
+                    ft_permuteTwoRows();
                 return true;
             case 5:
+                if (ft_parseUserInput())
+                    ft_permuteTwoColumns();
                 return true;
             case 6:
                 return true;
