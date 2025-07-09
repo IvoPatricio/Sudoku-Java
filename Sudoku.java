@@ -128,7 +128,7 @@ public class Sudoku {
         }
         if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
         {
-            System.err.println("Success: Grid Valid");
+            System.out.println("Success: Grid Valid");
             _grid = tempgrid;
         }
         else
@@ -137,6 +137,7 @@ public class Sudoku {
 
     public boolean ft_parseUserInput()
     {
+        System.out.print("Type the two targets of permutation, ex:'1 2'");
         String strUserInput = ft_safeTryCatchString();
         if (strUserInput == null)
             return false;
@@ -150,27 +151,72 @@ public class Sudoku {
         }
         _userInputSudoku[0] = Character.getNumericValue(strUserInput.charAt(0));
         _userInputSudoku[1] = Character.getNumericValue(strUserInput.charAt(2));
+        if (_userInputSudoku[0] < 1 || _userInputSudoku[0] > 9 
+            || _userInputSudoku[1] < 1 || _userInputSudoku[1] > 9)
+        {
+            System.err.println("Error: Input must be two numbers between 1 and 9");
+            return false;
+        }
         return true;
     }
 
     public void ft_permuteTwoColumns()
     {
-
+        int[][] tempgrid = new int[9][9];
+        for (int i = 0; i < 9; i++)
+        {
+            System.arraycopy(_grid[i], 0, tempgrid[i], 0, 9);
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            int temp = tempgrid[i][_userInputSudoku[0]];
+            tempgrid[i][_userInputSudoku[0]] = tempgrid[i][_userInputSudoku[1]];
+            tempgrid[i][_userInputSudoku[1]] = temp;
+        }
+        if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
+            _grid = tempgrid;
     }
 
     public void ft_permuteTwoRows()
     {
-        
+        int[][] tempgrid = new int[9][9];
+        int[] temprow = new int[9];
+        for (int i = 0; i < 9; i++)
+        {
+            System.arraycopy(_grid[i], 0, tempgrid[i], 0, 9);
+        }
+        System.arraycopy(tempgrid[_userInputSudoku[0]], 0, temprow, 0, 9);
+        System.arraycopy(tempgrid[_userInputSudoku[1]], 0, tempgrid[_userInputSudoku[0]], 0, 9);
+        System.arraycopy(temprow, 0, tempgrid[_userInputSudoku[1]], 0, 9);
+        if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
+            _grid = tempgrid;
+    }
+
+    public int ft_getBandinGrid(int num)
+    {
+        if (num >= 1 && num <= 3)
+            return 1;
+        if (num >= 4 && num <= 6)
+            return 2;
+        if (num >= 7 && num <= 9)
+            return 3;
+        return 0;
     }
 
     public void ft_permuteTwoColumnsOfBand()
     {
-
+        if (ft_getBandinGrid(_userInputSudoku[0]) == ft_getBandinGrid(_userInputSudoku[1]))
+            ft_permuteTwoColumns();
+        else
+            System.err.println("Error: Inputs arent part of the same band");
     }
 
     public void ft_permuteTwoRowsOfBand()
     {
-
+        if (ft_getBandinGrid(_userInputSudoku[0]) == ft_getBandinGrid(_userInputSudoku[1]))
+            ft_permuteTwoRows();
+        else
+            System.err.println("Error: Inputs arent apart of the same band");
     }
 
     
@@ -245,7 +291,7 @@ public class Sudoku {
             case 7:
                 return true;
             case 8:
-                System.out.println("Enter the grid values >");
+                System.out.printf("Enter the grid values >");
                 ft_userNewGrid();
                 return true;
         }
