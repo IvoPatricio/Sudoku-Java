@@ -2,13 +2,13 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 
-public class Sudoku {
+public class Sudoku2 {
     Scanner _scanner = new Scanner(System.in);
     Integer _userInputMenu = -1;
     int[] _userInputSudoku= new int[2];
     int[][] _grid = new int[9][9];
 
-    //Overloading in java doesnt allow me to use the same methods for overloading maybe a template?
+    //Overloading in java doesnt allow me to make a template like in CPP (more work in java X.x)
     public String ft_safeTryCatchString()
     {
         try
@@ -364,7 +364,7 @@ public class Sudoku {
 
     public static void main(String[] args)
     {
-        Sudoku sudokuGame = new Sudoku();
+        Sudoku2 sudokuGame = new Sudoku2();
         boolean isrunning = true;
 
         sudokuGame.ft_startStandardGrid();
