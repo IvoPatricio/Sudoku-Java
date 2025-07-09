@@ -39,7 +39,7 @@ public class Sudoku {
         }
     }
     
-    public void ft_checkGrid_Rows_Columns(int[][] tempgrid)
+    public boolean ft_isGridValid_Rows_Columns_Blocks(int[][] tempgrid)
     {
         for (int x = 0; x < tempgrid.length; x++)
         {
@@ -53,7 +53,7 @@ public class Sudoku {
                 if (map.getOrDefault(key, 0) == 0)
                 {
                     System.err.println("Error: Invalid Grid Rows");
-                    return ;
+                    return false;
                 }
             }
         }
@@ -70,46 +70,69 @@ public class Sudoku {
                 if (map.getOrDefault(key, 0) == 0)
                 {
                     System.err.println("Error: Invalid Grid Columns");
-                    return ;
+                    return false;
                 }
             }
         }
+        for (int x = 0; x < 9; x+=3)
+        {
+            for (int i = 0; i < 9; i+=3)
+            {
+                HashMap<Integer, Integer> map = new HashMap<>();
+                for (int x1 = 0; x1 < 3; x1++)
+                {
+                    for (int i1 = 0; i1 < 3; i1++)
+                    {
+                        map.put(tempgrid[x + x1][i + i1], map.getOrDefault(tempgrid[x + x1][i + i1], 0) + 1);
+                    }
+                }
+                for (int key = 1; key <= 9; key++)
+                {
+                    if (map.getOrDefault(key, 0) == 0)
+                    {
+                        System.err.println("Error: Invalid Grid Blocks (3x3)");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public void ft_userNewGrid()
     {
         int[][] tempgrid = new int[9][9];
-        String[] numbers = new String[9];
-        String line = "";
         for (int i = 0; i < 9; i++)
         {
-            line = _scanner.nextLine().trim();
-            numbers = line.split(" ");
-        }
+            String line = _scanner.nextLine().trim();
+            String[] numbers = line.split("\\s+"); 
 
-        for (int i = 0; i < tempgrid.length; i++)
-        {
-            
-            for (int x = 0; x < tempgrid.length; x++)
+            if (numbers.length != 9)
             {
-                if (numbers[x].length() != 9)
-                {
-                    System.err.println("Error: Invalid grid length");
-                    return ;
-                }
+                System.err.println("Error: Invalid Grid Row Length");
+                return;
+            }
+
+            for (int j = 0; j < 9; j++)
+            {
                 try
                 {
-                    tempgrid[i][x] = Integer.parseInt(numbers[x]);
+                    tempgrid[i][j] = Integer.parseInt(numbers[j]);
                 }
-                catch (Exception e)
+                catch (NumberFormatException e)
                 {
-                    System.err.println("Error: Invalid Grid Integer input");
-                    _scanner.nextLine();
-                    return ;
+                    System.err.println("Error: Invalid Integer Grid");
+                    return;
                 }
             }
         }
-        ft_checkGrid_Rows_Columns(tempgrid);
+        if (ft_checkGrid_Rows_Columns_Blocks(tempgrid))
+        {
+            System.err.println("Success: Grid Valid");
+            _grid = tempgrid;
+        }
+        else
+            System.err.println("Error: Grid Invalid");
     }
 
     public void ft_parseUserInput()
