@@ -160,6 +160,34 @@ public class Sudoku {
         return true;
     }
 
+    public void ft_verticalReflection()
+    {
+        int x = 8;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int col = 0; col < 9; col++)
+            {
+                int temp = _grid[col][i];
+                _grid[col][i] = _grid[col][x];
+                _grid[col][x] = temp;
+            }
+            x--;
+        }
+    }
+
+    public void ft_horizontalReflection()
+    {
+        int x = 8;
+        for (int i = 0; i < 4; i++)
+        {
+            int[] temp;
+            temp = _grid[i];
+            _grid[i] = _grid[x];
+            _grid[x] = temp;
+            x--;
+        }
+    }
+
     public void ft_permuteTwoColumns()
     {
         int[][] tempgrid = new int[9][9];
@@ -287,8 +315,10 @@ public class Sudoku {
                     ft_permuteTwoColumns();
                 return true;
             case 6:
+                ft_horizontalReflection();
                 return true;
             case 7:
+                ft_verticalReflection();
                 return true;
             case 8:
                 System.out.printf("Enter the grid values >");
