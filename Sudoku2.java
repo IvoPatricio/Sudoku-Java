@@ -8,7 +8,6 @@ public class Sudoku2 {
     int[] _userInputSudoku= new int[2];
     int[][] _grid = new int[9][9];
 
-    //Overloading in java doesnt allow me to make a template like in CPP (more work in java X.x)
     public String ft_safeTryCatchString()
     {
         try
