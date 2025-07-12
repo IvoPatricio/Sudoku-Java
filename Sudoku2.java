@@ -137,7 +137,7 @@ public class Sudoku2 {
 
     public boolean ft_parseUserInput()
     {
-        System.out.print("Type the two targets of permutation, ex:'1 2'");
+        System.out.print("Type the two targets of permutation, ex:'1 2': ");
         String strUserInput = ft_safeTryCatchString();
         if (strUserInput == null)
             return false;
@@ -197,9 +197,9 @@ public class Sudoku2 {
         }
         for (int i = 0; i < 9; i++)
         {
-            int temp = tempgrid[i][_userInputSudoku[0]];
-            tempgrid[i][_userInputSudoku[0]] = tempgrid[i][_userInputSudoku[1]];
-            tempgrid[i][_userInputSudoku[1]] = temp;
+            int temp = tempgrid[i][_userInputSudoku[0] - 1];
+            tempgrid[i][_userInputSudoku[0] - 1] = tempgrid[i][_userInputSudoku[1] - 1];
+            tempgrid[i][_userInputSudoku[1] - 1] = temp;
         }
         if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
             _grid = tempgrid;
@@ -213,9 +213,9 @@ public class Sudoku2 {
         {
             System.arraycopy(_grid[i], 0, tempgrid[i], 0, 9);
         }
-        System.arraycopy(tempgrid[_userInputSudoku[0]], 0, temprow, 0, 9);
-        System.arraycopy(tempgrid[_userInputSudoku[1]], 0, tempgrid[_userInputSudoku[0]], 0, 9);
-        System.arraycopy(temprow, 0, tempgrid[_userInputSudoku[1]], 0, 9);
+        System.arraycopy(tempgrid[_userInputSudoku[0] - 1], 0, temprow, 0, 9);
+        System.arraycopy(tempgrid[_userInputSudoku[1] - 1], 0, tempgrid[_userInputSudoku[0] - 1], 0, 9);
+        System.arraycopy(temprow, 0, tempgrid[_userInputSudoku[1] - 1], 0, 9);
         if (ft_isGridValid_Rows_Columns_Blocks(tempgrid))
             _grid = tempgrid;
     }
@@ -331,16 +331,16 @@ public class Sudoku2 {
     public boolean ft_menu()
     {
         ft_printGrid();
-        System.err.println("Escolha opcao: \r\n" + //
-                        "1. 0 - Sair \r\n" + //
-                        "2. 1 - Aplicar permutacao de dois numeros \r\n" + //
-                        "3. 2 - Aplicar permutacao de duas linhas de uma mesma faixa horizontal \r\n" + //
-                        "4. 3 - Aplicar permutacao de duas colunas de uma mesma faixa vertical \r\n" + //
-                        "5. 4 - Aplicar permutacao de duas faixas horizontais\r\n" + //
-                        "6. 5 - Aplicar permutacao de duas faixas verticais \r\n" + //
-                        "7. 6 - Aplicar reflexao horizontal \r\n" + //
-                        "8. 7 - Aplicar reflexao vertical\r\n" + //
-                        "9. 8 - Indicar quadricula");
+        System.err.println("Choose an option: \n" + //
+                   "1. 0 - Exit \n" + //
+                   "2. 1 - Apply permutation of two numbers \n" + //
+                   "3. 2 - Apply permutation of two rows within the same horizontal band \n" + //
+                   "4. 3 - Apply permutation of two columns within the same vertical band \n" + //
+                   "5. 4 - Apply permutation of two horizontal bands \n" + //
+                   "6. 5 - Apply permutation of two vertical bands \n" + //
+                   "7. 6 - Apply horizontal reflection \n" + //
+                   "8. 7 - Apply vertical reflection \n" + //
+                   "9. 8 - Indicate a full sudoku grid");
         
         _userInputMenu = ft_safeTryCatchInt();
         if (_userInputMenu == null || _userInputMenu < 0 || _userInputMenu > 8)
